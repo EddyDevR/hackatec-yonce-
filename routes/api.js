@@ -65,9 +65,9 @@ router.post("/", async function (req, res, next) {
     response_format: { type: 'json_object' },
   });
   const lugares = completion.choices[0].message;
-  console.log(JSON.parse(lugares));
-  res.status(200).json(completion.choices[0].message);
-
+  const finalMessage = JSON.parse(lugares.content);
+  console.log(finalMessage);
+  res.status(200).json(finalMessage);
 });
 
 
