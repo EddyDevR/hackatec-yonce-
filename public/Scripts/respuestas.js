@@ -97,8 +97,38 @@ fetch("/Scripts/respuestas.json")
           .then((data) => {
             const response = data;
             document.getElementById("pre").style.visibility = "hidden";
-            chatMessages.innerHTML += `<p id="app-web">Vinder: ${response}</p>`;
-            convertirAVoz(response);
+
+
+            chatMessages.innerHTML += `<p id="app-web">Vinder:
+            ${response[1].nombre} 
+            ${response[1].descripcion}
+            
+            ${response[2].nombre} 
+            ${response[2].descripcion}
+            
+            ${response[4].nombre} 
+            ${response[4].descripcion}
+
+            ${response[5].nombre} 
+            ${response[5].descripcion}
+            </p>`;
+            convertirAVoz(` 
+            ${response[1].nombre} 
+            ${response[1].descripcion}
+            
+            ${response[2].nombre} 
+            ${response[2].descripcion}
+            
+            ${response[3].nombre} 
+            ${response[3].descripcion}
+            
+            ${response[4].nombre} 
+            ${response[4].descripcion}
+
+            ${response[5].nombre} 
+            ${response[5].descripcion}
+            `);
+
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -110,7 +140,8 @@ fetch("/Scripts/respuestas.json")
 
 function convertirAVoz(texto) {
   const utterance = new SpeechSynthesisUtterance(texto);
-  utterance.lang = 'es-MX'; // Establece el idioma a español (España)
+  utterance.lang = 'es-MX'; // Establece el idioma a español (México)
   speechSynthesis.speak(utterance);
-}
+};
+
 

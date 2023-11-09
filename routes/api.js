@@ -58,6 +58,7 @@ router.post("/", async function (req, res, next) {
         " nombre del lugar",
         "direccion": "direccion",
         "descripcion": "descripcion del lugar"
+        todo esto en segunda persona
       `,
       },
     ],
@@ -66,7 +67,7 @@ router.post("/", async function (req, res, next) {
   });
   const lugares = completion.choices[0].message;
   const finalMessage = JSON.parse(lugares.content);
-  console.log(finalMessage);
+  // console.log(finalMessage);
   res.status(200).json(finalMessage);
 });
 
