@@ -34,11 +34,12 @@ body {
 
 #formContainer {
   text-align: center;
-  border-radius: 15px !important;
-  background-color: #08af88 !important;
+  border-radius: 24px !important;
+  background-color: #ffffff !important;
   opacity: 0.9;
   width:600px;
   height: 550px;
+  padding: 16px;
 }
 
 h1 {
