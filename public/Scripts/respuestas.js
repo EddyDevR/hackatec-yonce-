@@ -2,6 +2,11 @@ const btn = document.getElementById("send-button");
 const input = document.getElementById("user-message");
 const chatMessages = document.getElementById("chat-messages");
 const userAnswers = [];
+const fechaHoraActual = new Date();
+let hora = fechaHoraActual.getHours();
+hora += 1;
+
+convertirAVoz('Hola que tal soy vinder tu asistente virtual y estoy aqui para ayudarte, para comenzar por favor dime en que ciudad te encuentras?');
 
 fetch("/Scripts/respuestas.json")
   .then((response) => response.json())
@@ -10,8 +15,8 @@ fetch("/Scripts/respuestas.json")
     const preguntas = data.preguntas;
     let counter = 0;
 
+    console.log(counter);
     chatMessages.innerHTML += `<p id="app-web">Vinder: ${preguntas[counter]}</p>`;
-
     input.addEventListener("input", function () {
       btn.removeAttribute("disabled");
     });
@@ -49,11 +54,12 @@ fetch("/Scripts/respuestas.json")
     }
 
     function getResponse() {
+      /////
       const userMessage = input.value;
       chatMessages.innerHTML += `<p id="user-web">Tu: ${userMessage}</p>`;
       document.getElementById("pre").style.visibility = "visible";
       userAnswers.push(userMessage);
-      input.value = "";
+      convertirAVoz(preguntas[counter + 1]);
       counter++;
 
       if (counter < preguntas.length) {
@@ -68,7 +74,9 @@ fetch("/Scripts/respuestas.json")
         data.append("question02", userAnswers[1]);
         data.append("question03", userAnswers[2]);
         data.append("question04", userAnswers[3]);
-        data.append("question05", userAnswers[4]);
+        console.log(hora);
+        data.append("question05", hora);
+
 
         const requestOptions = {
           method: "POST",
@@ -90,6 +98,7 @@ fetch("/Scripts/respuestas.json")
             const response = data;
             document.getElementById("pre").style.visibility = "hidden";
             chatMessages.innerHTML += `<p id="app-web">Vinder: ${response}</p>`;
+            convertirAVoz(response);
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -97,3 +106,14 @@ fetch("/Scripts/respuestas.json")
       }
     }
   });
+
+
+
+
+
+
+function convertirAVoz(texto) {
+  const utterance = new SpeechSynthesisUtterance(texto);
+  utterance.lang = 'es-MX'; // Establece el idioma a español (España)
+  speechSynthesis.speak(utterance);
+}
