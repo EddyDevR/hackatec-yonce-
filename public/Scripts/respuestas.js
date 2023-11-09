@@ -108,12 +108,9 @@ fetch("/Scripts/respuestas.json")
   });
 
 
-
-
-
-
 function convertirAVoz(texto) {
   const utterance = new SpeechSynthesisUtterance(texto);
   utterance.lang = 'es-MX'; // Establece el idioma a español (España)
   speechSynthesis.speak(utterance);
 }
+

@@ -13,7 +13,9 @@
     "express": "~4.16.1",
     "hbs": "~4.0.4",
     "http-errors": "~1.6.3",
+    "http-status": "^1.7.3",
+    "httpstatus": "^1.0.0",
     "morgan": "~1.9.1",
-    "openai": "^3.2.1"
+    "openai": "^4.17.0"
   }
 }
