@@ -15,43 +15,48 @@ fetch("/Scripts/respuestas.json")
     const preguntas = data.preguntas;
     let counter = 0;
 
-    console.log(counter);
-    chatMessages.innerHTML += `<p id="app-web">Accessaid: ${preguntas[counter]}</p>`;
-    input.addEventListener("input", function () {
-      btn.removeAttribute("disabled");
-    });
+    function iniciarConversacion() {
 
-    btn.addEventListener("click", getResponse);
-    input.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        getResponse();
-      }
-    });
-
-    const textoReconocidoElement = document.getElementById('texto-reconocido');
-    const botonGrabar = document.getElementById('boton-grabar');
-
-    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
-      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-      recognition.lang = 'es-ES';
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        input.value = transcript;
-        btn.removeAttribute("disabled");
-      };
-
-      recognition.onerror = (event) => {
-        console.error('Error en el reconocimiento de voz:', event.error);
-      };
-
-      botonGrabar.addEventListener('click', () => {
-        recognition.start();
-      });
-    } else {
-      textoReconocidoElement.textContent = 'Tu navegador no soporta la SpeechRecognition API.';
-      botonGrabar.disabled = true;
+      setTimeout(() => {
+        presentarPregunta(0); // Comenzar presentando la primera pregunta
+      }, 7000); // Esperar 7 segundos antes de activar el reconocimiento de voz automáticamente
     }
+    function presentarPregunta(indice) {
+      if (indice < preguntas.length) {
+        // Presentar la pregunta actual
+        convertirAVoz(preguntas[indice]);
+        setTimeout(() => {
+          // Esperar 3 segundos antes de habilitar el reconocimiento de voz
+          const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+          recognition.lang = 'es-MX';
+
+          recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            input.value = transcript;
+            btn.removeAttribute("disabled");
+            getResponse();
+          };
+
+          recognition.onerror = (event) => {
+            console.error('Error en el reconocimiento de voz:', event.error);
+          };
+
+          recognition.start();
+
+          setTimeout(() => {
+            recognition.stop();
+            btn.setAttribute("disabled", true);
+            getResponse();
+            presentarPregunta(indice + 1); // Presentar la siguiente pregunta después de recibir la respuesta del usuario
+          }, 5000); // Esperar 5 segundos antes de detener el reconocimiento de voz y enviar el mensaje automáticamente
+        }, 3000); // Esperar 3 segundos antes de presentar la pregunta al usuario
+      } else {
+        // Si no hay más preguntas, realizar acciones finales
+        btn.disabled = true;
+        input.disabled = true;
+      }
+    }
+    iniciarConversacion();
 
     function getResponse() {
       /////
@@ -61,6 +66,8 @@ fetch("/Scripts/respuestas.json")
       document.getElementById("pre").style.visibility = "visible";
       userAnswers.push(userMessage);
       convertirAVoz(preguntas[counter + 1]);
+      presentarPregunta(counter);
+
       counter++;
 
       if (counter < preguntas.length) {

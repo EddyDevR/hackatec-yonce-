@@ -9,9 +9,20 @@ router.get("/", function (req, res, next) {
 
 router.get("/webs", function (req, res, next) {
   res.render("chat", {
-    title: "Vinder - Chat",
+    title: "Accessaid - Chat",
     style: "/stylesheets/chat.css",
+    script:"/Scripts/respuestas.js"
   });
+
+});
+
+router.get("/webs2", function (req, res, next) {
+  res.render("chat", {
+    title: "Accessaid - Chat",
+    style: "/stylesheets/chat.css",
+    script:"/Scripts/respuestas2.js"
+  });
+
 });
 
 module.exports = router;

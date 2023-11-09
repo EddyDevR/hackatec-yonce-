@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "Vinder App", style: "/stylesheets/entry.css" });
+  res.render("index", { title: "Accessaid App", style: "/stylesheets/entry.css" });
 });
 
 module.exports = router;

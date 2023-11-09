@@ -13,7 +13,7 @@ body::before {
 }
 
 body {
-  background-image: url("https://images.alphacoders.com/946/thumb-1920-946712.jpg") !important;
+  background-image: url("https://grupo-siayec.com.mx/images/blog/principal/thum14.jpg") !important;
   background-repeat: no-repeat;
   background-size: cover;
   justify-content: center;
@@ -33,9 +33,12 @@ body {
 }
 
 #formContainer {
+  text-align: center;
   border-radius: 15px !important;
-  background-color: #3daf08 !important;
+  background-color: #08af88 !important;
   opacity: 0.9;
+  width:600px;
+  height: 550px;
 }
 
 h1 {
@@ -82,7 +85,7 @@ button:hover {
 }
 
 #titlesBG {
-  background-color: #f24464 !important;
+  background-color: rgb(68, 164, 242) !important;
 }
 
 #socialNetworks {
